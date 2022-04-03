@@ -16,7 +16,7 @@ Simple Recycle Bin Forensic Tool Written with ❤ Rust
 - [ ] Generate Report
 - [ ] Refactor to more pretty code :pensive:
 
-### Prreview
+### Preview
 ```
  ____  _       _____
 |  _ \(_)     |  __ \
