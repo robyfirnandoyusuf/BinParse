@@ -22,7 +22,6 @@ struct Point {
 }
 static EPOCH: u64 = 116444736000000000;
 static HUNDREDS_OF_NANOSECONDS: u64 = 10000000;
-static _UNIT_MEM: [&str; 3] = ["KB", "MB", "GB"]; // unit 1000
 
 const BANNER: &str = r#"
  ____  _       _____                         
@@ -44,7 +43,7 @@ fn main() {
     // Create the table
     let mut table = Table::new();
     // Add a row per time
-    table.add_row(row!["Index", "Deletion Time", "File Size"]);
+    table.add_row(row!["Index", "Deletion Time", "File Size", "Version"]);
 
     for path in paths {
         let s = path.unwrap().path().display().to_string();
@@ -59,11 +58,15 @@ fn main() {
             let bytes  = chunks(&result, 2).collect::<Vec<&str>>();
 
             //  get delete time
-            let deletion_time   = &deletion_time(bytes.clone());
+            let deletion_time = &deletion_time(bytes.clone());
 
             // filesze
-            let filesize        = &filesize(bytes.clone());
+            let filesize         = &filesize(bytes.clone());
             let approximate_size = &approximate_size(filesize.to_string());
+
+            // version
+            let version = &version(bytes.clone());
+            // println!("{:?}", version);
 
             table.add_row(
                 Row::new(
@@ -71,6 +74,7 @@ fn main() {
                         Cell::new(file_name),
                         Cell::new(deletion_time),
                         Cell::new(approximate_size),
+                        Cell::new(version)
                     ]
                 )
             );
@@ -97,6 +101,18 @@ fn filesize<'a>(bytes: Vec<&'a str>) -> String {
     let filesize = val.to_string();
 
     filesize
+}
+
+fn version<'a>(bytes: Vec<&'a str>) -> String {
+    let version = &bytes[..1][0].to_string();
+    // let val = hex_bytes_to_u64(string_byte).unwrap();
+    // let version = val.to_string();
+    let mut ret = "Win Vista";
+    if version == "02" {
+        ret = "Win 10";
+    }
+
+    ret.to_string()
 }
 
 fn approximate_size(filesize: String) -> String {

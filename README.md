@@ -9,6 +9,7 @@ Simple Recycle Bin Forensic Tool Written with ❤ Rust
 - [X] Display Index
 - [X] Display Deletion Time
 - [X] Display Filesize
+- [X] Display Version
 - [ ] Display Ori Path
 - [ ] Display Orig Filename
 - [ ] Filter Feature
