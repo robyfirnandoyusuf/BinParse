@@ -110,8 +110,7 @@ fn filesize<'a>(bytes: Vec<&'a str>) -> String {
 
 fn version<'a>(bytes: Vec<&'a str>) -> String {
     let version = &bytes[..1][0].to_string();
-    // let val = hex_bytes_to_u64(string_byte).unwrap();
-    // let version = val.to_string();
+
     let mut ret = "Win Vista";
     if version == "02" {
         ret = "Win 10";
