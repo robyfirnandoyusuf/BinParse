@@ -68,11 +68,9 @@ fn main() {
 
             // version
             let version = &version(bytes.clone());
-            // println!("{:?}", version);
 
             // ori path
             let ori_path = &original_path(bytes.clone(), version.to_string());
-            // println!("{:?}", ori_path);
 
             table.add_row(
                 Row::new(
@@ -123,19 +121,12 @@ fn version<'a>(bytes: Vec<&'a str>) -> String {
 }
 
 fn original_path<'a>(bytes: Vec<&'a str>, version: String) -> String {
-    // println!("{:?}", version);
-
     let mut pathname: Vec<&'a str> = vec![];
     if version == "Win 10" {
-        // println!("{:?}", &bytes[28..]);
         pathname = bytes[28..].to_vec();
-        // let val = hex_bytes_to_u64(string_byte).unwrap();
-        // pathname = string_byte.to_string();
     }
     else {
         pathname = bytes[24..].to_vec();
-        // let val = hex_bytes_to_u64(string_byte).unwrap();
-        // pathname = string_byte.to_string();
     }
     let some_x = "00";
     pathname.retain(|&x| x != some_x);
