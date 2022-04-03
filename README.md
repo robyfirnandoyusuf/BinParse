@@ -13,6 +13,7 @@ Simple Recycle Bin Forensic Tool Written with ❤ Rust
 - [ ] Display Orig Filename
 - [ ] Filter Feature
 - [ ] Generate Report
+- [ ] Refactor to more pretty code :pensive:
 
 ### Inspiring from 
 - [$IParser](https://df-stream.com/recycle-bin-i-parser/) 
