@@ -43,7 +43,7 @@ fn main() {
     // Create the table
     let mut table = Table::new();
     // Add a row per time
-    table.add_row(row!["Index", "Deletion Time", "File Size", "Version"]);
+    table.add_row(row!["Index", "Deletion Time", "Size", "Version"]);
 
     for path in paths {
         let s = path.unwrap().path().display().to_string();
