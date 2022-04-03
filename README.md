@@ -15,6 +15,6 @@ Simple Recycle Bin Forensic Tool Written with ❤ Rust
 - [ ] Generate Report
 - [ ] Refactor to more pretty code :pensive:
 
-### Inspiring By
+### Inspired By
 - [$IParser](https://df-stream.com/recycle-bin-i-parser/) 
 - [TrashParse](https://github.com/hanasuru/TrashParse/)
