@@ -12,6 +12,8 @@ use chrono::Utc;
 use std::time::{UNIX_EPOCH, Duration};
 use prettytable::{Table, Row, Cell};
 use unbytify::*;
+use hex::decode;
+use ascii_converter::*;
 
 #[macro_use] extern crate prettytable;
 #[derive(Debug, PartialEq)]
@@ -31,7 +33,7 @@ const BANNER: &str = r#"
 | |_) | | | | | |  | (_| | |  \__ \  __/ |   
 |____/|_|_| |_|_|   \__,_|_|  |___/\___|_|   
                                             ♥ Rust
-    ----- Built with ♥ by gryecat -----
+    ----- Built with ♥ by greycat -----
 "#;
 
 fn main() {
@@ -43,7 +45,7 @@ fn main() {
     // Create the table
     let mut table = Table::new();
     // Add a row per time
-    table.add_row(row!["Index", "Deletion Time", "Size", "Version"]);
+    table.add_row(row!["Index", "Deletion Time", "File Size", "Version", "Original Path"]);
 
     for path in paths {
         let s = path.unwrap().path().display().to_string();
@@ -68,13 +70,18 @@ fn main() {
             let version = &version(bytes.clone());
             // println!("{:?}", version);
 
+            // ori path
+            let ori_path = &original_path(bytes.clone(), version.to_string());
+            // println!("{:?}", ori_path);
+
             table.add_row(
                 Row::new(
                     vec![
                         Cell::new(file_name),
                         Cell::new(deletion_time),
                         Cell::new(approximate_size),
-                        Cell::new(version)
+                        Cell::new(version),
+                        Cell::new(ori_path)
                     ]
                 )
             );
@@ -113,6 +120,33 @@ fn version<'a>(bytes: Vec<&'a str>) -> String {
     }
 
     ret.to_string()
+}
+
+fn original_path<'a>(bytes: Vec<&'a str>, version: String) -> String {
+    // println!("{:?}", version);
+
+    let mut pathname: Vec<&'a str> = vec![];
+    if version == "Win 10" {
+        // println!("{:?}", &bytes[28..]);
+        pathname = bytes[28..].to_vec();
+        // let val = hex_bytes_to_u64(string_byte).unwrap();
+        // pathname = string_byte.to_string();
+    }
+    else {
+        pathname = bytes[24..].to_vec();
+        // let val = hex_bytes_to_u64(string_byte).unwrap();
+        // pathname = string_byte.to_string();
+    }
+    let some_x = "00";
+    pathname.retain(|&x| x != some_x);
+
+    // let mut string_vec: Vec<String> = Vec::new();
+    // for s in &pathname {
+    //     string_vec.push(s.to_string());
+    // }
+    let path_string = pathname.into_iter().map(|s| s.to_string()).collect();
+
+    hexadecimal_to_string(path_string).unwrap()
 }
 
 fn approximate_size(filesize: String) -> String {
