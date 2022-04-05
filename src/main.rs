@@ -49,7 +49,7 @@ fn main() {
     if args.len() > 1 {
         if args[1].contains("--dir") {
             let arg1: Vec<&str> = args[1].split("=").collect();
-            dir = arg1[1].to_string();
+            dir = arg1[1].trim().to_string();
             // println!("{:?}", &dir);
             // ./examples/$RECYCLE.BIN/S-1-5-21-4144826732-2003267707-115468498-1001
         }
