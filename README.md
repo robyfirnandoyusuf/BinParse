@@ -1,4 +1,4 @@
-# BinParser
+# BinParse
 Simple Recycle Bin Forensic Tool Written with ❤ Rust 
 
 
