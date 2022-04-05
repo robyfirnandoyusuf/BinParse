@@ -3,6 +3,9 @@ use std::fs;
 use std::fs::File;
 use std::io::Read;
 use std::fmt::Debug;
+use std::env;
+use std::process;
+
 use owo_colors::{OwoColorize};
 use owo_colors::colors::*;
 // use utf16string::{BigEndian, BE, WString, LE, LittleEndian, WStr};
@@ -12,8 +15,9 @@ use chrono::Utc;
 use std::time::{UNIX_EPOCH, Duration};
 use prettytable::{Table, Row, Cell};
 use unbytify::*;
-use hex::decode;
+// use hex::decode;
 use ascii_converter::*;
+
 
 #[macro_use] extern crate prettytable;
 #[derive(Debug, PartialEq)]
@@ -39,7 +43,32 @@ const BANNER: &str = r#"
 fn main() {
     banner();
 
-    let dir = "./examples/$RECYCLE.BIN/S-1-5-21-4144826732-2003267707-115468498-1001";
+    let args: Vec<String> = env::args().collect();
+    // println!("{:?}", args[1]);
+    let mut dir: String = String::new();
+    if args.len() > 1 {
+        if args[1].contains("--dir") {
+            let arg1: Vec<&str> = args[1].split("=").collect();
+            dir = arg1[1].to_string();
+            // println!("{:?}", &dir);
+            // ./examples/$RECYCLE.BIN/S-1-5-21-4144826732-2003267707-115468498-1001
+        }
+    } else {
+        println!("Please supply argument !");
+        process::exit(1);
+    }
+
+    if (dir.trim().is_empty()) {
+        println!("Directory is empty !");
+        process::exit(1);
+    }
+    
+    if !path_exists(&dir) {
+        println!("Directory not found !");
+        process::exit(1);
+    }
+
+    // let dir = "./examples/$RECYCLE.BIN/S-1-5-21-4144826732-2003267707-115468498-1001";
     let paths = fs::read_dir(dir).unwrap();
 
     // Create the table
@@ -90,6 +119,10 @@ fn main() {
 
 fn banner() {
     println!("\n\n{}", BANNER.fg::<Green>().bold());
+}
+
+fn path_exists(path: &str) -> bool {
+    fs::metadata(path).is_ok()
 }
 
 fn deletion_time<'a>(bytes: Vec<&'a str>) -> String {
