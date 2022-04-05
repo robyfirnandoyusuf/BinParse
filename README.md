@@ -16,6 +16,10 @@ Simple Recycle Bin Forensic Tool Written with ❤ Rust
 - [ ] Generate Report
 - [ ] Refactor to more pretty code :pensive:
 
+### Usage
+```sh
+$ cargo run -- --dir='./examples/$RECYCLE.BIN/S-1-5-21-4144826732-2003267707-115468498-1001'
+```
 ### Preview
 ```
  ____  _       _____
