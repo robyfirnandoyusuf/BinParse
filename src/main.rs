@@ -17,7 +17,7 @@ use prettytable::{Table, Row, Cell};
 use unbytify::*;
 // use hex::decode;
 use ascii_converter::*;
-
+use clap::{Arg, App, SubCommand};
 
 #[macro_use] extern crate prettytable;
 #[derive(Debug, PartialEq)]
@@ -44,6 +44,7 @@ fn main() {
     banner();
 
     let args: Vec<String> = env::args().collect();
+
     // println!("{:?}", args[1]);
     let mut dir: String = String::new();
     if args.len() > 1 {
@@ -58,7 +59,7 @@ fn main() {
         process::exit(1);
     }
 
-    if (dir.trim().is_empty()) {
+    if dir.trim().is_empty() {
         println!("Directory is empty !");
         process::exit(1);
     }
