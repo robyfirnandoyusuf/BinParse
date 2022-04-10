@@ -86,7 +86,7 @@ fn main() {
             let file_name = vec_path[id_file_name];
             // println!("{}", file_name);
 
-            let result = hex_repl(get_file_as_byte_vec(&s));
+            let result = hex_repr(get_file_as_byte_vec(&s));
             let bytes  = chunks(&result, 2).collect::<Vec<&str>>();
 
             //  get delete time
@@ -228,7 +228,7 @@ fn get_file_as_byte_vec(filename: &str) -> Vec<u8> {
     buffer
 }
 
-fn hex_repl(byte_array: Vec<u8>) -> String {
+fn hex_repr(byte_array: Vec<u8>) -> String {
     let build_string_vec: Vec<String> = byte_array.chunks(2)
         .map(|c| {
             if c.len() == 2 { 
